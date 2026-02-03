@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Oct 3, 2023 - Forever</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating tulip petals background -->
+    <div class="petals-container" id="petalsContainer"></div>
+    
+    <!-- Growing tulips on sides -->
+    <div class="tulip-garden left-garden" id="leftGarden"></div>
+    <div class="tulip-garden right-garden" id="rightGarden"></div>
+
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-toggle" id="musicToggle">
+            <svg class="music-icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+            </svg>
+            <svg class="music-icon pause-icon hidden" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+            </svg>
+        </button>
+        <div class="volume-control">
+            <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+            </svg>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+        </div>
+        <audio id="bgMusic" loop>
+            <!-- Saksi Ang Langit by December Avenue -->
+            <source src="audio/saksi-ang-langit.mp3" type="audio/mpeg">
+            <!-- Fallback formats -->
+            <source src="audio/saksi-ang-langit.ogg" type="audio/ogg">
+            <source src="audio/saksi-ang-langit.wav" type="audio/wav">
+        </audio>
+    </div>
+
+    <!-- Interactive Floating Buttons -->
+    <div class="interactive-buttons">
+        <button class="interactive-btn tulip-btn" id="tulipBtn" title="Send Tulips 🌷">
+            <span class="btn-icon">🌷</span>
+        </button>
+        <button class="interactive-btn heart-btn" id="heartBtn" title="Send Hearts 💕">
+            <span class="btn-icon">💕</span>
+        </button>
+        <button class="interactive-btn sparkle-btn" id="sparkleBtn" title="Add Sparkle ✨">
+            <span class="btn-icon">✨</span>
+        </button>
+        <button class="interactive-btn message-btn" id="messageBtn" title="Love Message 💌">
+            <span class="btn-icon">💌</span>
+        </button>
+    </div>
+
+    <!-- Bouquet Popup -->
+    <div class="bouquet-popup hidden" id="bouquetPopup">
+        <div class="bouquet-content">
+            <div class="bouquet-image">🌷🌹🌺🌸🌼</div>
+            <p class="bouquet-text">A bouquet for you, my love! 💕</p>
+            <button class="bouquet-close" id="bouquetClose">Thank you! ❤️</button>
+        </div>
+    </div>
+
+    <!-- Love Messages Popup -->
+    <div class="message-popup hidden" id="messagePopup">
+        <div class="message-content">
+            <h3 class="message-title">💌 Love Note</h3>
+            <p class="message-text" id="messageText"></p>
+            <button class="message-close" id="messageClose">Close 💕</button>
+        </div>
+    </div>
+
+    <!-- Hero Section: Calendar Moment -->
+    <section class="hero-calendar">
+        <div class="calendar-wrapper">
+            <div class="calendar-header">
+                <h2>October 2023</h2>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day">Sun</div>
+                <div class="calendar-day">Mon</div>
+                <div class="calendar-day">Tue</div>
+                <div class="calendar-day">Wed</div>
+                <div class="calendar-day">Thu</div>
+                <div class="calendar-day">Fri</div>
+                <div class="calendar-day">Sat</div>
+                
+                <div class="calendar-date empty"></div>
+                <div class="calendar-date empty"></div>
+                <div class="calendar-date empty"></div>
+                <div class="calendar-date empty"></div>
+                <div class="calendar-date empty"></div>
+                <div class="calendar-date empty"></div>
+                <div class="calendar-date">1</div>
+                <div class="calendar-date">2</div>
+                <div class="calendar-date special-date" data-date="3">
+                    <span>3</span>
+                    <svg class="heart-circle" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" />
+                    </svg>
+                    <div class="heart-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="calendar-date">4</div>
+                <div class="calendar-date">5</div>
+                <div class="calendar-date">6</div>
+                <div class="calendar-date">7</div>
+                <div class="calendar-date">8</div>
+                <div class="calendar-date">9</div>
+                <div class="calendar-date">10</div>
+                <div class="calendar-date">11</div>
+                <div class="calendar-date">12</div>
+                <div class="calendar-date">13</div>
+                <div class="calendar-date">14</div>
+                <div class="calendar-date">15</div>
+                <div class="calendar-date">16</div>
+                <div class="calendar-date">17</div>
+                <div class="calendar-date">18</div>
+                <div class="calendar-date">19</div>
+                <div class="calendar-date">20</div>
+                <div class="calendar-date">21</div>
+                <div class="calendar-date">22</div>
+                <div class="calendar-date">23</div>
+                <div class="calendar-date">24</div>
+                <div class="calendar-date">25</div>
+                <div class="calendar-date">26</div>
+                <div class="calendar-date">27</div>
+                <div class="calendar-date">28</div>
+                <div class="calendar-date">29</div>
+                <div class="calendar-date">30</div>
+                <div class="calendar-date">31</div>
+            </div>
+            <div class="time-counter">
+                <h3>Time Since We Started</h3>
+                <div class="counter-display">
+                    <div class="counter-item">
+                        <span class="counter-value" id="years">0</span>
+                        <span class="counter-label">Years</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-value" id="months">0</span>
+                        <span class="counter-label">Months</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-value" id="days">0</span>
+                        <span class="counter-label">Days</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <p>Scroll to relive our story</p>
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- Curved Timeline Container -->
+    <section class="timeline-container">
+        <!-- SVG Curved Path -->
+        <svg class="timeline-path" viewBox="0 0 100 4500" preserveAspectRatio="none">
+            <path d="M 50 0 Q 20 200 50 400 Q 80 600 50 800 Q 20 1000 50 1200 Q 80 1400 50 1600 Q 20 1800 50 2000 Q 80 2200 50 2400 Q 20 2600 50 2800 Q 80 3000 50 3200 Q 20 3400 50 3600 Q 80 3800 50 4000 Q 20 4200 50 4400 L 50 4500" 
+                  fill="none" 
+                  stroke="url(#gradient)" 
+                  stroke-width="0.5"/>
+            <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffc0cb;stop-opacity:0.3" />
+                    <stop offset="100%" style="stop-color:#ff69b4;stop-opacity:0.8" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <!-- Timeline Moments -->
+        <div class="timeline-moments">
+
+            <!-- YEAR MARKER 2022 -->
+            <div class="year-divider" data-aos="zoom-in">
+                <div class="year-badge">2022</div>
+                <div class="year-subtitle">Where It All Began</div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">November 2022</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">Before We're Official</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgNov22_3.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgNov22_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">The beginning of something beautiful, even before we knew what it would become.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">December 2022</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">First SM P and Skyranch Together!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgDec22_3.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgDec22_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Our first adventure together—the thrill of the rides matched the butterflies in my heart.</p>
+                </div>
+            </div>
+            
+            <!-- YEAR MARKER 2023 -->
+            <div class="year-divider" data-aos="zoom-in">
+                <div class="year-badge">2023</div>
+                <div class="year-subtitle">The Year Everything Changed</div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">January 2023</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">Late Night Gala Since Jan!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgJan23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgJan23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Late nights that turned into our favorite tradition—just us and endless conversations.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">February 2023</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">GOALS with YOU</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgFeb23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgFeb23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Building dreams together—every goal felt possible with you by my side.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">March 2023</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">GALA always?</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgMar23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgMar23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Some places become special not because of what they are, but because of who we're with.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">April 2023</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">First Beach Together!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgApr23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgApr23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Sand between our toes and the whole world ahead of us—our first escape to paradise.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">May 2023</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">First Birthday Flowers For You</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgMay23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgMay23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">The first of many birthdays together—you deserved every petal and so much more.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">June 2023</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Intramuros With You</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgJune23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgJune23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Walking through history hand in hand—every cobblestone witnessed our growing love.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">July 2023</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">My Graduation With You!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgJuly23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgJuly23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">One chapter ended, but our story was just beginning—you made that day unforgettable.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">August 2023</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">First Mall & Swim With Your Fam!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgAug23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgAug23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Meeting your family felt like coming home—they welcomed me like I was always meant to be there.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">September 2023</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Night Gala With You</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgSep23_1.jpg" alt="Life before you" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgSep23_2.jpg" alt="Waiting for you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Under the stars, everything felt perfect—little did we know October 3rd was just around the corner.</p>
+                </div>
+            </div>
+            
+            <!-- THE BIG MOMENT -->
+            <div class="timeline-moment special-moment" data-aos="zoom-in">
+                <div class="moment-date">October 3, 2023</div>
+                <div class="moment-card card-official">
+                    <h3 class="moment-title">The Beginning! The BEST DAY!</h3>
+                    <div class="image-grid grid-single">
+                        <div class="image-placeholder">
+                            <img src="images/img1.jpg" alt="Where it all started" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">The day everything changed. The first day we became more than just friends—we became US. 💕</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">Late October 2023</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">First Official Dates</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgLateOct23_1.jpg" alt="Our first talks" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgLateOct23_2.jpg" alt="Getting to know you" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Finally official—every date felt like a dream I never wanted to wake up from.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">November 2023</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">Growing Closer</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgNov23_1.jpg" alt="Winter memories" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgNov23_2.jpg" alt="Holiday moments" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Every moment with you felt like coming home to a place I'd been searching for.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">December 2023</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">First Christmas Together Official!</h3>
+                    <div class="image-grid grid-triple">
+                        <div class="image-placeholder">
+                            <img src="images/imgDec23_1.jpg" alt="Moments together" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgDec23_2.jpg" alt="Laughter and joy" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgDec23_3.jpg" alt="Building memories" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Our first Christmas as a couple—you're the best gift I could ever ask for.</p>
+                </div>
+            </div>
+
+            <!-- YEAR MARKER 2024 -->
+            <div class="year-divider" data-aos="zoom-in">
+                <div class="year-badge">2024</div>
+                <div class="year-subtitle">Deepening Our Love</div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">January 2024</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">After School Dates!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzFeb24_1.jpg" alt="New beginnings" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzFeb24_2.jpg" alt="Growing together" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">The best part of every school day was knowing I'd see you after.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">February 2024</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">Valentine's Together!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzJan24_1.jpg" alt="Beautiful moments" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzJan24_2.jpg" alt="Our journey" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Our first Valentine's Day—though every day with you feels like a celebration of love.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">March 2024</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Summer Swim Together!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzMar24_1.jpg" alt="Spring days" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzMar24_2.jpg" alt="Adventures" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Making a splash together—you make every moment feel like sunshine.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">April 2024</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">More Samgy Dates!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzApril24_1.jpg" alt="Spring days" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzApril24_2.jpg" alt="Adventures" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Our favorite spot, our favorite food, our favorite person—you.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">May 2024</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">BirthMonth Together!</h3>
+                    <div class="image-grid grid-triple">
+                        <div class="image-placeholder">
+                            <img src="images/imgzMay24_1.jpg" alt="Spring days" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzMay24_2.jpg" alt="Adventures" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzMay24_3.jpg" alt="Adventures" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Celebrating you, celebrating us—every moment of your birth month was pure joy.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">June 2024</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">More And More Dates!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzJune24_1.jpg" alt="Summer love" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzJune24_2.jpg" alt="Golden days" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">I could never get enough of you—every date just makes me want a thousand more.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">July 2024</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">Spending More Time Together</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzJuly24_1.jpg" alt="Summer love" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzJuly24_2.jpg" alt="Golden days" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Time with you never feels like enough—but every second is precious.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">August 2024</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">First Month Together At Uni!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzAug24_1.jpg" alt="Summer love" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzAug24_2.jpg" alt="Golden days" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Starting a new chapter together—university is better because you're there with me.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">September 2024</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Through Ups And Downs</h3>
+                    <div class="image-grid grid-single">
+                        <div class="image-placeholder">
+                            <img src="images/imgzSep24_2.jpg" alt="Standing together" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Not every moment was easy, but every challenge made us stronger. I choose you in the rain, too.</p>
+                </div>
+            </div>
+
+            <!-- FIRST ANNIVERSARY -->
+            <div class="timeline-moment special-moment" data-aos="zoom-in">
+                <div class="moment-date">October 3, 2024</div>
+                <div class="moment-card card-anniversary">
+                    <h3 class="moment-title">The First Anniversary</h3>
+                    <div class="image-grid grid-single">
+                        <div class="image-placeholder">
+                            <img src="images/imgzOct24_3.jpg" alt="Where it all started" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">One year of us—365 days and counting, and I fall for you more each day. 💕</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">October 2024</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">More Random DATES!</h3>
+                    <div class="image-grid grid-single">
+                        <div class="image-placeholder">
+                            <img src="images/imgzOct24_2.jpg" alt="Standing together" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Sometimes the best dates are the unplanned ones—spontaneous adventures with you.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">November 2024</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">Choosing Each Other EveryDay EveryNight!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzNov24_1.jpg" alt="Together always" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzNov24_2.jpg" alt="Our bond" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">We proved that love isn't just a feeling—it's a choice we make, over and over again.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">December 2024</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Christmas Together!</h3>
+                    <div class="image-grid grid-quad">
+                        <div class="image-placeholder">
+                            <img src="images/imgzDec24_1.jpg" alt="Together always" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzDec24_2.jpg" alt="Our bond" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzDec24_3.jpg" alt="Unbreakable" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzDec24_4.jpg" alt="Unbreakable" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Another Christmas together—and all I want under the tree is more years with you.</p>
+                </div>
+            </div>
+
+            <!-- YEAR MARKER 2025 -->
+            <div class="year-divider" data-aos="zoom-in">
+                <div class="year-badge">2025</div>
+                <div class="year-subtitle">Forever Growing Together</div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">January - February 2025</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">New Year, New Travels!</h3>
+                    <div class="image-grid grid-quad">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzJan25_1.jpg" alt="New beginnings" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzJan25_2.jpg" alt="Growing together" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzFeb25_1.jpg" alt="Beautiful moments" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzFeb25_2.jpg" alt="Our journey" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">New adventures, new places—but the best part of every journey is still you.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">March - April 2025</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">More Bonding Together</h3>
+                    <div class="image-grid grid-quad">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzMar25_1.jpg" alt="Spring days" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzMar25_2.jpg" alt="Adventures" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzApr25_1.jpg" alt="Sunshine and smiles" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzApr25_2.jpg" alt="Sunshine and smiles" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Every moment together strengthens our bond—we're building something beautiful.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">May 2025</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">More Birthdays Together</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzMay25_1.jpg" alt="Spring days" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzMay25_2.jpg" alt="Adventures" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Another year older, another year of celebrating you—my favorite person to celebrate.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">June 2025</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">Random Date Nights!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzJune25_1.jpg" alt="Summer love" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzJune25_2.jpg" alt="Golden days" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Spontaneous nights under the stars—with you, every moment is magic.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">July 2025</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">More Dates Together</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzJuly25_1.jpg" alt="Summer love" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzJuly25_2.jpg" alt="Golden days" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Summer days and summer nights—all made perfect by your presence.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">August 2025</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Eating Dinner is Better With You</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzAug25_1.jpg" alt="Summer love" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzAug25_2.jpg" alt="Golden days" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Every meal tastes better, every conversation flows easier—everything is better with you.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">September 2025</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">More Date Nights With You!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzSep25_1.jpg" alt="Standing together" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzSep25_2.jpg" alt="Standing together" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Night after night, date after date—I never get tired of being with you.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">October 2025</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">Gala Nights With You!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzOct25_1.jpg" alt="Standing together" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzOct25_2.jpg" alt="Standing together" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Back where it all began—Gala nights will always hold a special place in our story.</p>
+                </div>
+            </div>
+
+            <!-- SECOND ANNIVERSARY -->
+            <div class="timeline-moment special-moment" data-aos="zoom-in">
+                <div class="moment-date">October 3, 2025</div>
+                <div class="moment-card card-anniversary">
+                    <h3 class="moment-title">The Second Anniversary!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzOct25_3_1.jpg" alt="Where it all started" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzOct25_3_2.jpg" alt="Where it all started" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Two years of love, laughter, and endless memories—here's to forever. 💕</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">November 2025</div>
+                <div class="moment-card card-style-2">
+                    <h3 class="moment-title">Car Dates!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzNov25_1.jpg" alt="Together always" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzNov25_2.jpg" alt="Our bond" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Long drives, good music, and you—my favorite combination.</p>
+                </div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">December 2025</div>
+                <div class="moment-card card-style-3">
+                    <h3 class="moment-title">Late Night Rides!</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzDec25_1.jpg" alt="Together always" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzDec25_2.jpg" alt="Our bond" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">Under the night sky, just us against the world—these are the moments I treasure most.</p>
+                </div>
+            </div>
+
+            <!-- YEAR MARKER 2026 -->
+            <div class="year-divider" data-aos="zoom-in">
+                <div class="year-badge">2026</div>
+                <div class="year-subtitle">Still Us, Still Growing</div>
+            </div>
+
+            <div class="timeline-moment" data-aos="fade-up">
+                <div class="moment-date">2026</div>
+                <div class="moment-card card-style-1">
+                    <h3 class="moment-title">Still Us</h3>
+                    <div class="image-grid grid-dual">
+                        <div class="image-placeholder">
+                            <img src="images/imgzzzJan26_1.jpg" alt="Present day" loading="lazy">
+                        </div>
+                        <div class="image-placeholder">
+                            <img src="images/imgzzzJan26_2.jpg" alt="Forever" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="moment-caption">And here we are, still writing our story, still falling deeper every day. Forever starts now. 💕</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Valentine Question Section -->
+    <section class="valentine-question">
+        <div class="question-container">
+            <h2 class="question-text">Will you be my Valentine?</h2>
+            <div class="question-subtext">Forever and always?</div>
+            <div class="button-container">
+                <button class="btn-yes" id="btnYes">Yes! ❤️</button>
+                <button class="btn-no" id="btnNo">No</button>
+            </div>
+        </div>
+
+        <!-- Hidden love letter (revealed after "No" interaction) -->
+        <div class="love-letter hidden" id="loveLetter">
+            <div class="letter-paper">
+                <h3>To the love of my life, Jewel</h3>
+                <p>From the moment I met you and the moment you accepted me on October 3rd, 2023, I knew my life would never be the same. You've filled my days with laughter, my heart with warmth, and my soul with a peace I never knew existed.</p>
+                <p>Every photo, every memory we've created together tells a story of two people who chose each other, not just once, but every single day.</p>
+                <p>So here's my truth: there is no world where my answer isn't "yes" to you. There never was, and there never will be.</p>
+                <p class="letter-signature">Forever yours,<br><span class="signature-name">Your Valentine, Charles</span></p>
+            </div>
+        </div>
+
+        <!-- Final acceptance screen -->
+        <div class="acceptance-screen hidden" id="acceptanceScreen">
+            <div class="celebration-content">
+                <h2 class="celebration-title">I knew you'd say yes BABE! 💕</h2>
+                <p class="celebration-text">Because our love story was always meant to be written together.</p>
+                <p class="celebration-text">I Love You Always My Jewel!</p>
+                <div class="heart-burst"></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
