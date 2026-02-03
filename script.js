@@ -104,6 +104,9 @@ const loveLetter = document.getElementById('loveLetter');
 const acceptanceScreen = document.getElementById('acceptanceScreen');
 const buttonContainer = document.querySelector('.button-container');
 
+// Detect if device is mobile/touch
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
 // Phase 1: "No" button runs away on hover/click
 function initNoButtonRunning() {
     // Set initial position
@@ -113,14 +116,35 @@ function initNoButtonRunning() {
     btnNo.style.top = '50%';
     btnNo.style.transform = 'translate(-50%, -50%)';
     
-    btnNo.addEventListener('mouseenter', makeNoButtonRun);
-    btnNo.addEventListener('touchstart', makeNoButtonRun);
+    // For mobile: only use click/touch events
+    // For desktop: use both hover and click
+    if (!isTouchDevice) {
+        btnNo.addEventListener('mouseenter', makeNoButtonRun);
+    }
+    
+    btnNo.addEventListener('touchstart', handleNoTouch);
     btnNo.addEventListener('click', handleNoClick);
+}
+
+function handleNoTouch(e) {
+    if (currentPhase !== 'initial') return;
+    e.preventDefault();
+    
+    noClickCount++;
+    
+    if (noClickCount === 1) {
+        // First touch: button runs away
+        makeNoButtonRun(e);
+    } else if (noClickCount === 2) {
+        // Second touch: start dissolving into petals
+        currentPhase = 'dissolving';
+        startPetalDissolve();
+    }
 }
 
 function makeNoButtonRun(e) {
     if (currentPhase !== 'initial') return;
-    e.preventDefault();
+    if (e) e.preventDefault();
     
     const container = buttonContainer.getBoundingClientRect();
     
@@ -144,16 +168,23 @@ function makeNoButtonRun(e) {
 
 function handleNoClick(e) {
     e.preventDefault();
-    noClickCount++;
     
-    if (noClickCount === 1) {
-        // First click: continue running
-        makeNoButtonRun();
-    } else if (noClickCount === 2) {
-        // Second click: start dissolving into petals
-        currentPhase = 'dissolving';
-        startPetalDissolve();
+    if (currentPhase !== 'initial') return;
+    
+    // For desktop users (non-touch devices)
+    if (!isTouchDevice) {
+        noClickCount++;
+        
+        if (noClickCount === 1) {
+            // First click: continue running
+            makeNoButtonRun();
+        } else if (noClickCount === 2) {
+            // Second click: start dissolving into petals
+            currentPhase = 'dissolving';
+            startPetalDissolve();
+        }
     }
+    // For touch devices, handleNoTouch already handles the logic
 }
 
 // Phase 2: "No" button dissolves into petals
@@ -343,6 +374,7 @@ function init() {
     
     // Log ready
     console.log('💕 Valentine Timeline initialized');
+    console.log('Touch device:', isTouchDevice);
 }
 
 // ========== MUSIC PLAYER ==========
